@@ -1,0 +1,1 @@
+# no-ai-google-search
