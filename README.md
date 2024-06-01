@@ -19,7 +19,7 @@ You can install the extension directly from the Chrome Web Store:
 
 ### Manual Installation
 
-1. Download the extension files from the [GitHub repository](#).
+1. Download the extension files from the [GitHub repository](https://github.com/openchampagne/No-AI-Google-Search/releases).
 2. Open Chrome and go to `chrome://extensions/`.
 3. Enable "Developer mode" by toggling the switch in the top right corner.
 4. Click on the "Load unpacked" button and select the directory where you downloaded the extension files.
