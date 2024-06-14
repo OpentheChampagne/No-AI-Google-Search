@@ -1,11 +1,11 @@
 # No AI Google Search
 
-No AI Google Search is a Chrome extension designed to enhance your Google search experience by disabling AI-generated previews. This extension automatically adds a parameter to each Google search URL to ensure you get the classic search results without AI summaries.
+No AI Google Search is a Chrome extension designed to enhance your Google search experience by disabling AI-generated previews. This extension automatically removes AI Previews Google searches to ensure you get the classic search results without AI Previews.
 
 ## Features
 
-- **Disable AI Previews:** Automatically appends a parameter to Google search URLs to disable AI-generated previews.
-- **Seamless Integration:** Integrates smoothly with your Google searches without requiring manual adjustments.
+- **Disable AI Previews:** Automatically reviews Google's new AI-generated previews.
+- **Seamless Integration:** Integrates smoothly in the background with your Google searches without requiring manual adjustments.
 
 
 ## Installation
@@ -26,5 +26,5 @@ You can install the extension directly from the Chrome Web Store:
 
 ## Usage
 
-Once installed, the extension will automatically add the necessary parameter (`udm=14`) to each Google search URL to disable AI previews. 
+Once installed, the extension will remove nodes that belong to Google's AI previews. 
 
