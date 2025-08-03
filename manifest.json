@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "No AI Google Search",
-  "version": "0.1.4",
+  "version": "0.2",
   "description": "Remove AI Previews in Google Search",
   "permissions": [],
   "host_permissions": [
