@@ -1,51 +1,42 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // console.log("Content script loaded and running");
-    function removeElementByAttributes(attributes) {
-        const selector = attributes.map(attr => `[${attr.name}="${attr.value}"]`).join('');
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-            console.log(`Found element with attributes: ${JSON.stringify(attributes)}`, element);
-            const parentContainer = element.closest('div');
-            if (parentContainer) {
-                console.log('Removing parent container:', parentContainer);
-                parentContainer.remove();
-            } else {
-                console.log('Removing element itself:', element);
-                element.remove();
-            }
-        });
+// Function to add -ai parameter to Google search URLs
+function addAiParameter() {
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+
+    // Check if we're on a Google search page
+    if (url.hostname.includes('google.com') && url.pathname.includes('/search')) {
+        const searchParams = url.searchParams;
+        const query = searchParams.get('q');
+
+        // Only modify if there's a search query and it doesn't already contain -ai
+        if (query && !query.toLowerCase().includes('-ai')) {
+            // Add -ai to the search query
+            const newQuery = query + ' -ai';
+            searchParams.set('q', newQuery);
+
+            // Update the URL without reloading the page
+            const newUrl = url.toString();
+            window.history.replaceState({}, '', newUrl);
+
+            // Reload the page to get results without AI overviews
+            window.location.reload();
+        }
     }
+}
 
-    removeElementByAttributes([{ name: 'jscontroller', value: '' }, { name: 'data-is-desktop', value: '1' }]);
-    removeElementByAttributes([{ name: 'jscontroller', value: '' }, { name: 'data-is-desktop', value: '1' }]);
+// Run the function when the page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addAiParameter);
+} else {
+    addAiParameter();
+}
 
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach((node) => {
-                if (node.nodeType === Node.ELEMENT_NODE) {
-                    console.log('New node added:', node);
-                    if (node.matches('h1')) {
-                        if (node.innerText.includes('AI Overview')) {
-                            console.log('Found AI Overview header:', node);
-                            const parentContainer = node.closest('div');
-                            if (parentContainer) {
-                                console.log('Removing parent container:', parentContainer);
-                                parentContainer.remove();
-                            }
-                        }
-                    }
-                    if (node.matches('div[data-is-desktop="1"][jscontroller]')) {
-                        console.log('Found specific div:', node);
-                        const parentContainer = node.closest('div');
-                        if (parentContainer) {
-                            console.log('Removing parent container:', parentContainer);
-                            parentContainer.remove();
-                        }
-                    }
-                }
-            });
-        });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-});
+// Also run when navigating (for SPA behavior)
+let lastUrl = location.href;
+new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+        lastUrl = url;
+        addAiParameter();
+    }
+}).observe(document, { subtree: true, childList: true });
